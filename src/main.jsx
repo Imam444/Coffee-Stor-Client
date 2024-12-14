@@ -9,15 +9,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    loader: () => fetch("http://localhost:4000/coffee")
   },
   {
-    path: '/add',
-    element:<AddCoffee></AddCoffee>
+    path: "/add",
+    element: <AddCoffee></AddCoffee>,
   },
   {
-    path: '/update',
-    element:<Update></Update>
-  }
+    path: "/update",
+    element: <Update></Update>,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(

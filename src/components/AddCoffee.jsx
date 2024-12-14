@@ -33,7 +33,7 @@ const AddCoffee = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertId) {
+        if (data.insertedId) {
           Swal.fire({
             title: "Success!",
             text: "User Added Successfully",
