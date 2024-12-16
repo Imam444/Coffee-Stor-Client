@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
     const { _id, name, quantity, supplier, taste, category, details, photo } =
         coffee;
     const handleDelete = _id => {
         console.log(_id);
-
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -18,7 +17,7 @@ const CoffeeCard = ({ coffee }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`http://localhost:4000/coffee/${_id}`, {
-                  method: "Delete",
+                  method: 'DELETE'
                 })
                   .then((res) => res.json())
                   .then((data) => {
@@ -27,8 +26,12 @@ const CoffeeCard = ({ coffee }) => {
                       Swal.fire({
                         title: "Deleted!",
                         text: "Your coffee has been deleted.",
+                        icon: "success",
                       });
-                      ("success");
+                      const remaining = coffees.filter(
+                        (coffee) => coffee._id !== _id
+                      );
+                      setCoffees(remaining);
                     }
                   });
             }
@@ -51,7 +54,7 @@ const CoffeeCard = ({ coffee }) => {
                 <div className="card-actions justify-end ">
                     <div className="join join-vertical">
                         <button className="btn ">View</button>
-                        <Link to={`update/${_id}`}></Link>
+                        <Link to={`update/${_id}`}><button className="btn">Edit</button></Link>
                         <button
                             onClick={() => handleDelete(_id)}
                             className="btn bg-orange-500"
